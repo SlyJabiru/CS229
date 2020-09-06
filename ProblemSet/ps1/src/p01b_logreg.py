@@ -30,7 +30,8 @@ def main(train_path='/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/data/ds1_t
     util.plot(x_eval, y_eval, clf.theta, '/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/data/ds1_plot.png')
 
     # Use np.savetxt to save predictions on eval set to pred_path
-    pred = clf.predict(x_eval)
+    h = clf.predict(x_eval)
+    pred = np.where(h >= 0.5, 1, 0)
     np.savetxt(pred_path, pred, delimiter=',')
     # *** END CODE HERE ***
 
@@ -73,11 +74,10 @@ class LogisticRegression(LinearModel):
             sub = np.matmul(inverse, grad)
             new_theta = self.theta - sub
             tol = np.sum(np.abs(new_theta - self.theta))
-            print(tol)
             self.theta = new_theta
             n_iters += 1
 
-        print(f'Converged after {n_iters} iterations')
+        print(f'Converged after {n_iters} iterations. tol: {tol}')
         # *** END CODE HERE ***
 
     def predict(self, x):
@@ -93,7 +93,7 @@ class LogisticRegression(LinearModel):
         z = x.dot(self.theta)
         gz = 1 / (1 + np.exp(-z))  # == h(x)
 
-        return np.where(gz >= 0.5, 1, 0)
+        return gz
         # *** END CODE HERE ***
 
 

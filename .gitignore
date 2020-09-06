@@ -1,3 +1,4 @@
 .idea
 *.pyc
 .DS_Store
+ProblemSet/ps1/src/__pycache__/*
