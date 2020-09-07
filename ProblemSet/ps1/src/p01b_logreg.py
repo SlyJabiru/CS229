@@ -27,12 +27,15 @@ def main(train_path='/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/data/ds1_t
 
     # Plot decision boundary on top of validation set set
     x_eval, y_eval = util.load_dataset(eval_path, add_intercept=True)
-    util.plot(x_eval, y_eval, clf.theta, '/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/data/ds1_plot.png')
+    util.plot(x_eval, y_eval, clf.theta, f'{pred_path}.png')
 
     # Use np.savetxt to save predictions on eval set to pred_path
     h = clf.predict(x_eval)
     pred = np.where(h >= 0.5, 1, 0)
     np.savetxt(pred_path, pred, delimiter=',')
+
+    print('Number of wrong predictions')
+    print((y_eval != pred).sum())
     # *** END CODE HERE ***
 
 
@@ -98,4 +101,10 @@ class LogisticRegression(LinearModel):
 
 
 if __name__ == '__main__':
-    main()
+    main(train_path='/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/data/ds1_train.csv',
+         eval_path='/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/data/ds1_valid.csv',
+         pred_path='/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/src/output/p01b_pred_1.txt')
+
+    main(train_path='/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/data/ds2_train.csv',
+         eval_path='/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/data/ds2_train.csv',
+         pred_path='/Users/leeseungjoon/realest/CS229/ProblemSet/ps1/src/output/p01b_pred_2.txt')
